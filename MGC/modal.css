@@ -1,0 +1,172 @@
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 2000; /* High z-index to cover everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if content is too long */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    opacity: 0; /* Start hidden for transition */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal.visible {
+    display: flex; /* Use flex to center content */
+    opacity: 1;
+}
+
+.modal-overlay {
+  /* Optional: can be used for specific overlay clicks if needed, but clicking .modal handles it */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Add some top margin */
+    padding: 40px; /* Increased padding */
+    border: 1px solid #888;
+    width: 90%; /* Responsive width */
+    max-width: 600px; /* Max width */
+    border-radius: 10px;
+    position: relative; /* Needed for close button positioning */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    box-sizing: border-box; /* Include padding in width */
+    max-height: 90vh; /* Limit height to viewport height */
+    overflow-y: auto; /* Add scrollbar if content exceeds max-height */
+}
+
+.modal-content h1 {
+    font-size: 2em; /* Slightly smaller h1 in modal */
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+.modal-content p {
+    font-size: 1em;
+    margin-bottom: 1em;
+    max-width: none; /* Remove max-width constraint from global p */
+    text-align: center;
+}
+
+.modal-content .contact-info {
+    margin-bottom: 20px;
+}
+
+.modal-content .contact-info p {
+    font-size: 1.1em;
+    margin: 8px 0;
+}
+
+.modal-content .contact-info a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+ .modal-content .contact-info a:hover {
+    color: #4CAF50; /* Changed from #a0c4ff to primary green */
+ }
+
+.modal-content form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px; /* Keep form max-width centered */
+    width: 100%;
+    padding: 0; /* Remove padding here, handled by modal-content */
+    background-color: transparent; /* Remove background here */
+    border-radius: 0;
+    box-shadow: none;
+    margin-left: auto; /* Center the form */
+    margin-right: auto; /* Center the form */
+}
+
+.modal-content form input,
+.modal-content form textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+ .modal-content form textarea {
+    min-height: 120px; /* Slightly smaller textarea in modal */
+    resize: vertical;
+ }
+.modal-content form button {
+    background-color: #4CAF50; /* Changed from #a0c4ff to primary green */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.modal-content form button:hover {
+    background-color: #388E3C; /* Changed from #7090c0 to darker green */
+}
+
+
+.modal-close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #777;
+    text-decoration: none;
+}
+
+/* Modal Mobile Adjustments */
+@media (max-width: 768px) {
+     .modal-content {
+        width: 95%; /* Wider on mobile */
+        padding: 20px; /* Less padding */
+     }
+
+     .modal-close {
+         top: 10px;
+         right: 15px;
+         font-size: 24px;
+     }
+
+     .modal-content h1 {
+         font-size: 1.8em;
+         margin-top: 10px; /* Add some top margin below close button */
+     }
+
+     .modal-content .contact-info p {
+        font-size: 1em;
+     }
+
+     .modal-content form input,
+     .modal-content form textarea {
+         padding: 10px;
+         font-size: 1em;
+     }
+     .modal-content form button {
+         padding: 10px 15px;
+         font-size: 1em;
+     }
+}

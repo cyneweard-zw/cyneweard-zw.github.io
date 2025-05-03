@@ -1,0 +1,8 @@
+/* 
+This file previously contained all styles.
+It has been refactored into:
+- base.css: General styles, typography, container.
+- navbar.css: Navigation bar and dropdowns.
+- sections.css: Styles for the main content sections.
+- modal.css: Styles for the contact modal.
+*/

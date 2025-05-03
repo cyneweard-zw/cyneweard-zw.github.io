@@ -1,0 +1,1460 @@
+<html><head><base href="."><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Dragon Eats &amp; Lodge</title><style>
+    :root {
+        --primary: #333333;
+        --secondary: #666666;
+        --light: #ffffff;
+        --dark: #000000;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+        background-color: var(--light);
+        line-height: 1.6;
+    }
+    
+    .header {
+        background-color: transparent;
+        color: var(--dark);
+        padding: 1.5rem 2rem;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+    
+    .header nav {
+        background-color: rgba(245, 245, 245, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+        padding: 0 1.5rem;
+    }
+    
+    .tabs {
+        display: flex;
+        gap: 0.5rem;
+        background-color: #f5f5f5;
+        padding: 0.3rem;
+        border-radius: 50px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .tab-btn {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        background: none;
+        color: var(--secondary);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        flex: 0 1 auto;
+    }
+    
+    .tab-btn.active {
+        color: var(--light);
+        background-color: var(--dark);
+    }
+    
+    .content {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0;
+    }
+    
+    .card {
+        max-width: 800px;
+        margin: 0 auto 4rem auto;
+        padding: 0 2rem;
+    }
+    
+    .specials-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .special-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .special-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .special-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .special-details {
+        padding: 1.5rem;
+    }
+    
+    .special-name {
+        font-size: 1.1rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .special-description {
+        font-size: 0.9rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .special-price {
+        font-size: 1.2rem;
+        color: var(--dark);
+    }
+    
+    .special-card .cta-button {
+        display: block;
+        width: 100%;
+        padding: 0.8rem;
+        margin-top: 1rem;
+        background: var(--dark);
+        color: var(--light);
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+    
+    .special-card .cta-button:hover {
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+        .specials-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    }
+    
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    .card h2 {
+        font-weight: 300;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+    }
+    
+    .menu-item, .room-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+        font-size: 0.9rem;
+        position: relative;
+    }
+    
+    .menu-item-image {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        transform: translateY(20px);
+        right: -220px;
+        top: -80px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        object-fit: cover;
+        z-index: 1000;
+    }
+    
+    .menu-item:hover .menu-item-image {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .service-item {
+        position: relative;
+    }
+    
+    .service-image {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        transform: translateY(20px);
+        right: -220px;
+        top: -80px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        object-fit: cover;
+        z-index: 1000;
+    }
+    
+    .service-item:hover .service-image {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @media (max-width: 768px) {
+        .header nav {
+            margin: 0 1rem;
+            padding: 0.5rem;
+        }
+    
+        .logo {
+            font-size: 0.9rem;
+            padding: 0 0.8rem;
+        }
+    
+        .tabs {
+            gap: 0.25rem;
+            padding: 0.2rem;
+        }
+    
+        .tab-btn {
+            padding: 0.4rem 1rem;
+            font-size: 0.7rem;
+        }
+    
+        .hero {
+            height: 80vh;
+        }
+    
+        .hero-content {
+            padding: 0 1.5rem;
+        }
+    
+        .hero h1 {
+            font-size: 1.8rem;
+        }
+    
+        .hero p {
+            font-size: 1rem;
+        }
+    
+        .card {
+            padding: 0 1rem;
+        }
+    
+        .menu-item-image, .service-image {
+            display: block;
+            position: static;
+            width: 100%;
+            height: 200px;
+            opacity: 1;
+            transform: none;
+            margin: 1rem 0;
+            right: auto;
+            top: auto;
+        }
+    
+        .menu-item {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    
+        .service-item {
+            margin-bottom: 2rem;
+        }
+    
+        div[style*="grid-template-columns: repeat(2, 1fr)"] {
+            grid-template-columns: 1fr !important;
+        }
+    
+        .reservation-form {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+    
+        .form-group {
+            grid-column: 1 / -1;
+        }
+    
+        .room-display {
+            margin-bottom: 2rem;
+        }
+    
+        .room-display img {
+            height: 200px !important;
+        }
+    
+        .hero-cta {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    
+        .cta-button {
+            width: 100%;
+        }
+    
+        .modal-content {
+            padding: 3rem 1rem 1rem 1rem;
+        }
+    
+        .footer {
+            padding: 2rem 1rem;
+        }
+    
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    
+        .whatsapp-btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.8rem;
+        }
+    }
+    
+    .hero {
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        position: relative;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 4rem;
+        overflow: hidden;
+        background-color: var(--dark);
+        color: var(--light);
+    }
+    
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+        z-index: 1;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding-left: 10%;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        letter-spacing: 3px;
+        margin-bottom: 1rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+        max-width: 600px;
+    }
+    
+    .restaurant-hero {
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                    url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=80');
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .accommodation-hero {
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                    url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80');
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .hero-cta {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .cta-button {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .cta-primary {
+        background-color: var(--light);
+        color: var(--dark);
+    }
+    
+    .cta-secondary {
+        background-color: transparent;
+        color: var(--light);
+        border: 1px solid var(--light);
+    }
+    
+    .cta-button:hover {
+        transform: translateY(-2px);
+    }
+    
+    .footer {
+        background-color: var(--dark);
+        color: var(--light);
+        padding: 4rem 2rem;
+    }
+    .room-display {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        margin-bottom: 2rem;
+    }
+    
+    .room-display:hover {
+        transform: translateY(-5px);
+    }
+    
+    .room-details {
+        padding: 1.5rem;
+    }
+    
+    .room-info {
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        color: var(--secondary);
+    }
+    
+    .room-location {
+        margin-bottom: 0.5rem;
+    }
+    
+    .room-amenities {
+        line-height: 1.4;
+    }
+    
+    .room-details p {
+        margin-bottom: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .room-info {
+            font-size: 0.8rem;
+        }
+        
+        .room-amenities small {
+            display: block;
+            margin-top: 0.5rem;
+        }
+    }
+    .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+    
+    .footer-section h3 {
+        font-weight: 300;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-section ul {
+        list-style: none;
+    }
+    
+    .footer-section li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-section a {
+        color: var(--light);
+        text-decoration: none;
+        font-size: 0.8rem;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+    
+    .footer-section a:hover {
+        opacity: 1;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+        z-index: 2000;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+        background-color: var(--light);
+        margin: 0;
+        padding: 4rem 2rem 2rem 2rem;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        position: relative;
+        overflow-y: auto;
+        max-width: none;
+    }
+    
+    .close-modal {
+        position: absolute;
+        right: 1.5rem;
+        top: 1rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--secondary);
+    }
+    
+    .close-modal:hover {
+        color: var(--dark);
+    }
+    
+    .menu-section {
+        margin-bottom: 2rem;
+    }
+    
+    .menu-section h3 {
+        font-weight: 300;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+    }
+    
+    .reservation-form {
+        max-width: 600px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        padding: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group:last-child {
+        grid-column: 1 / -1;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--secondary);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    
+    .form-group textarea {
+        height: 100px;
+        resize: vertical;
+    }
+    
+    .submit-btn {
+        grid-column: 1 / -1;
+        background-color: var(--dark);
+        color: var(--light);
+        padding: 0.8rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .room-display .cta-button {
+        margin-top: 1rem;
+        width: 100%;
+        padding: 0.8rem;
+        background-color: var(--dark);
+        color: var(--light);
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .room-display .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+    
+    .room-location small {
+        color: var(--secondary);
+        font-weight: 500;
+    }
+    .category-header {
+        background-color: #f5f5f5;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease;
+    }
+    
+    .category-header:hover {
+        background-color: #ebebeb;
+    }
+    
+    .category-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .category-header.active + .category-content {
+        max-height: 2000px;
+        transition: max-height 0.5s ease-in;
+    }
+    
+    .category-header::after {
+        content: '+';
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+    
+    .category-header.active::after {
+        content: '-';
+    }
+    
+    @media (max-width: 768px) {
+        /* Add this rule to hide the about section */
+        .about-section {
+            display: none;
+        }
+    }
+    </style><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet"></head><body>
+        <header class="header">
+            <nav>
+                <div class="logo">THE DRAGON EATS</div>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab('restaurant')">Dining</button>
+                    <button class="tab-btn" onclick="openTab('accommodation')">Stay</button>
+                </div>
+            </nav>
+        </header>
+    
+        <main class="content">
+            <div id="restaurant" class="tab-content active">
+                <div class="hero restaurant-hero">
+                    <div class="hero-content">
+                        <h1>FINE ASIAN CUISINE</h1>
+                        <p>Experience the authentic flavors of the East in our contemporary setting</p>
+                        <div class="hero-cta">
+                            <button class="cta-button cta-primary">View Menu</button>
+                            <button class="cta-button cta-secondary" onclick="document.getElementById('reservationModal').style.display = 'block'; document.body.style.overflow = 'hidden';">Reserve Table</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>CHEF'S SPECIALS</h2>
+                    <div class="specials-grid">
+                        <style>
+                            @media (max-width: 768px) {
+                                .card {
+                                    padding: 0;
+                                    overflow-x: auto;
+                                    -webkit-overflow-scrolling: touch;
+                                }
+                                
+                                .specials-grid {
+                                    grid-template-columns: repeat(4, 280px);
+                                    gap: 1rem;
+                                    padding: 1rem;
+                                    overflow-x: auto;
+                                    scroll-snap-type: x mandatory;
+                                    scroll-padding: 1rem;
+                                }
+                                
+                                .special-card {
+                                    scroll-snap-align: start;
+                                    min-width: 280px;
+                                }
+                                
+                                /* Hide scrollbar for Chrome, Safari and Opera */
+                                .card::-webkit-scrollbar {
+                                    display: none;
+                                }
+                                
+                                /* Hide scrollbar for IE, Edge and Firefox */
+                                .card {
+                                    -ms-overflow-style: none;
+                                    scrollbar-width: none;
+                                }
+                            }
+                        </style>
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Dragon Roll - colorful sushi roll with red tuna, pink salmon, and green avocado">
+                            <div class="special-details">
+                                <h3 class="special-name">Signature Dragon Roll</h3>
+                                <p class="special-description">Spicy tuna, tempura shrimp, avocado, topped with seared salmon</p>
+                                <span class="special-price">$32</span>
+                            </div>
+                        </div>
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Omakase Nigiri - artfully arranged selection of fresh fish on rice">
+                            <div class="special-details">
+                                <h3 class="special-name">Omakase Nigiri Set</h3>
+                                <p class="special-description">Chef's selection of premium seasonal fish</p>
+                                <span class="special-price">$75</span>
+                            </div>
+                        </div>
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Rainbow Roll - colorful roll topped with various types of fish">
+                            <div class="special-details">
+                                <h3 class="special-name">Rainbow Roll Supreme</h3>
+                                <p class="special-description">California roll topped with assorted sashimi</p>
+                                <span class="special-price">$42</span>
+                            </div>
+                        </div>
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Truffle Toro Roll - luxurious roll with pink toro and black truffle shavings">
+                            <div class="special-details">
+                                <h3 class="special-name">Truffle Toro Roll</h3>
+                                <p class="special-description">Fatty tuna with shaved black truffle</p>
+                                <span class="special-price">$45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>OUR SERVICES</h2>
+                    <div class="specials-grid">
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Private dining room with elegant Asian decor and traditional elements">
+                            <div class="special-details">
+                                <h3 class="special-name">Private Dining</h3>
+                                <p class="special-description">Experience intimate dining in our private rooms, perfect for special occasions 
+                                    and business meetings. Custom menus and dedicated service available.</p>
+                                <button class="cta-button" onclick="document.getElementById('reservationModal').style.display = 'block'; document.body.style.overflow = 'hidden';">Book Private Dining</button>
+                            </div>
+                        </div>
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Elegant catering display of sushi platters and Asian cuisine">
+                            <div class="special-details">
+                                <h3 class="special-name">Catering</h3>
+                                <p class="special-description">Bring the Dragon Eats experience to your venue. We offer full-service catering 
+                                    for events of all sizes, featuring our signature sushi and Asian cuisine.</p>
+                                <button class="cta-button" onclick="document.getElementById('reservationModal').style.display = 'block'; document.body.style.overflow = 'hidden';">Request Catering</button>
+                            </div>
+                        </div>
+                        <div class="special-card">
+                            <img class="special-image" src="https://images.unsplash.com/photo-1464207687429-7505649dae38?auto=format&amp;fit=crop&amp;w=400&amp;h=400&amp;q=80" alt="Elegant event space with Asian-inspired decorations">
+                            <div class="special-details">
+                                <h3 class="special-name">Events</h3>
+                                <p class="special-description">Host your next special occasion with us. From intimate celebrations to grand 
+                                    corporate gatherings, our dedicated events team ensures a memorable experience.</p>
+                                <button class="cta-button" onclick="document.getElementById('reservationModal').style.display = 'block'; document.body.style.overflow = 'hidden';">Plan Your Event</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                  <h2>LOCATION</h2>
+                  <div style="position: relative; width: 100%; height: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.6!2d-122.4!3d37.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ4JzAwLjAiTiAxMjLCsDI0JzAwLjAiVw!5e0!3m2!1sen!2sus!4v1234567890!5m2!1sen!2sus"
+                      width="100%" 
+                      height="400" 
+                      style="border:0;" 
+                      allowfullscreen="" 
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                  </div>
+                  <div style="text-align: center; margin-top: 2rem;">
+                    <h3 style="font-weight: 300; font-size: 1.2rem; margin-bottom: 1rem;">THE DRAGON EATS & LODGE</h3>
+                    <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">127 Joshua Mqabuko Nkomo Street, CBD</p>
+                    <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Bulawayo, Zimbabwe</p>
+                    <a href="https://goo.gl/maps/YourBulawayoLocationLink" 
+                       class="cta-button" 
+                       style="background: var(--dark); color: var(--light); text-decoration: none; display: inline-block; padding: 0.8rem 2rem; border-radius: 50px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                      Get Directions
+                    </a>
+                  </div>
+                </div>
+                <div class="card about-section">
+                    <h2>ABOUT US</h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; background: linear-gradient(to right, #f5f5f5, #ffffff); padding: 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                        <div style="text-align: center;">
+                            <svg width="50" height="50" viewBox="0 0 24 24" style="margin: 0 auto 1rem auto;">
+                                <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"></path>
+                            </svg>
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Founded in 2015</h3>
+                            <p style="font-size: 0.9rem; color: var(--secondary); line-height: 1.6;">
+                                Established as a fusion of traditional Asian culinary arts and modern luxury hospitality.
+                            </p>
+                        </div>
+                        <div style="text-align: center;">
+                            <svg width="50" height="50" viewBox="0 0 24 24" style="margin: 0 auto 1rem auto;">
+                                <path fill="currentColor" d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"></path>
+                            </svg>
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Master Chefs</h3>
+                            <p style="font-size: 0.9rem; color: var(--secondary); line-height: 1.6;">
+                                Led by Master Chef Hiroshi Tanaka and a team of culinary artisans trained in traditional techniques.
+                            </p>
+                        </div>
+                        <div style="text-align: center;">
+                            <svg width="50" height="50" viewBox="0 0 24 24" style="margin: 0 auto 1rem auto;">
+                                <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"></path>
+                            </svg>
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Our Philosophy</h3>
+                            <p style="font-size: 0.9rem; color: var(--secondary); line-height: 1.6;">
+                                Blending ancient traditions with modern luxury to create unforgettable experiences.
+                            </p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                        <img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Traditional Japanese sushi chef preparing fresh sushi at wooden counter, artistic lighting" style="width: 100%; height: 400px; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        
+                        <div style="padding: 2rem; background: linear-gradient(45deg, #f9f9f9, #ffffff); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                            <p style="font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--secondary);">
+                                The Dragon Eats &amp; Lodge represents the pinnacle of modern Asian culinary artistry and luxury accommodation. 
+                                Our commitment to excellence extends beyond the kitchen and into every aspect of your stay.
+                            </p>
+                            <p style="font-size: 0.95rem; line-height: 1.8; color: var(--secondary);">
+                                Whether you're dining in our restaurant or staying in our carefully curated rooms, 
+                                we strive to create an atmosphere that honors both tradition and contemporary sophistication.
+                            </p>
+                            <div style="margin-top: 2rem;">
+                                <button class="cta-button" style="background: var(--dark); color: var(--light); border: none; padding: 1rem 2rem; border-radius: 50px; cursor: pointer; transition: all 0.3s ease;">
+                                    Learn More About Our Story
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="accommodation" class="tab-content">
+                <div class="hero accommodation-hero">
+                    <div class="hero-content">
+                        <h1>LUXURY STAYS</h1>
+                        <p>Immerse yourself in tranquility and oriental elegance</p>
+                        <div class="hero-cta">
+                            <button class="cta-button cta-primary" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">Book Now</button>
+                            <button class="cta-button cta-secondary" onclick="document.getElementById('roomsModal').style.display = 'block'; document.body.style.overflow = 'hidden';">View Rooms</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>BOOK YOUR STAY</h2>
+    <form id="bookingForm" class="reservation-form">
+        <div class="form-group">
+            <label for="check-in">Check-in</label>
+            <input type="date" id="check-in" required="">
+        </div>
+        <div class="form-group">
+            <label for="check-out">Check-out</label>
+            <input type="date" id="check-out" required="">
+        </div>
+        <div class="form-group">
+            <label for="guests-number">Guests</label>
+            <select id="guests-number" required="">
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="room-type">Room</label>
+            <select id="room-type" required="">
+                <option value="dragon-wing">Dragon Wing Suite ($280)</option>
+                <option value="imperial">Imperial Chamber ($380)</option>
+                <option value="dynasty">Dynasty Suite ($450)</option>
+            </select>
+        </div>
+        <button type="submit" class="submit-btn">Book Now</button>
+    </form>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p style="margin-bottom: 1rem; color: var(--secondary); font-size: 0.9rem;">- or -</p>
+            <a href="https://wa.me/1234567890?text=I%20would%20like%20to%20book%20a%20stay%20at%20Dragon%20Lodge" target="_blank" class="whatsapp-btn" style="font-size: 0.72rem; padding: 0.8rem 1.6rem; width: 80%; margin: 0 auto; display: flex; justify-content: center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"></path>
+        </svg>
+        Book via WhatsApp
+    </a>
+        </div>
+    
+                </div>
+                <div class="card">
+                    <h2>ROOMS</h2>
+                    <div class="specials-grid">
+                        <div class="room-display">
+                            <img src="https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Dragon Wing Suite - Modern Asian inspired room with traditional elements" style="width: 100%; height: 300px; object-fit: cover;">
+                            <div class="room-details">
+                                <h3>Dragon Wing Suite</h3>
+                                <p>Elegant suite featuring traditional Asian decor with modern amenities.</p>
+                                <div class="room-info">
+                                    <div class="room-location">
+                                        <small>Location: Jade Dragon Lodge • East Wing • Garden View</small>
+                                    </div>
+                                    <div class="room-amenities">
+                                        <small>Amenities: Private Balcony • Tea Ceremony Area • En-suite Bathroom • Smart TV • Mini Bar</small>
+                                    </div>
+                                </div>
+                                <span class="price">$280/night</span>
+                                <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+    
+                        <div class="room-display">
+                            <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Imperial Chamber - Luxurious suite with traditional Japanese elements" style="width: 100%; height: 300px; object-fit: cover;">
+                            <div class="room-details">
+                                <h3>Imperial Chamber</h3>
+                                <p>Spacious chamber with panoramic views and premium furnishings.</p>
+                                <div class="room-info">
+                                    <div class="room-location">
+                                        <small>Location: Golden Phoenix Lodge • North Tower • City View</small>
+                                    </div>
+                                    <div class="room-amenities">
+                                        <small>Amenities: Private Zen Garden • Luxury Bath • King Bed • Workspace • Lounge Area</small>
+                                    </div>
+                                </div>
+                                <span class="price">$380/night</span>
+                                <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+    
+                        <div class="room-display">
+                            <img src="https://images.unsplash.com/photo-1592229505726-ca121723b8ef?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Dynasty Suite - Premium suite with modern Asian luxury design" style="width: 100%; height: 300px; object-fit: cover;">
+                            <div class="room-details">
+                                <h3>Dynasty Suite</h3>
+                                <p>Our finest accommodation featuring separate living areas.</p>
+                                <div class="room-info">
+                                    <div class="room-location">
+                                        <small>Location: Crimson Dragon Lodge • Penthouse Level • Mountain View</small>
+                                    </div>
+                                    <div class="room-amenities">
+                                        <small>Amenities: Private Dining • Spa Bath • Living Room • Executive Workspace • Butler Service</small>
+                                    </div>
+                                </div>
+                                <span class="price">$450/night</span>
+                                <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card">
+                  <h2>LOCATION</h2>
+                  <div style="position: relative; width: 100%; height: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.6!2d-122.4!3d37.8!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ4JzAwLjAiTiAxMjLCsDI0JzAwLjAiVw!5e0!3m2!1sen!2sus!4v1234567890!5m2!1sen!2sus"
+                      width="100%" 
+                      height="400" 
+                      style="border:0;" 
+                      allowfullscreen="" 
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                  </div>
+                  <div style="text-align: center; margin-top: 2rem;">
+                    <h3 style="font-weight: 300; font-size: 1.2rem; margin-bottom: 1rem;">THE DRAGON EATS & LODGE</h3>
+                    <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">127 Joshua Mqabuko Nkomo Street, CBD</p>
+                    <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Bulawayo, Zimbabwe</p>
+                    <a href="https://goo.gl/maps/YourBulawayoLocationLink" 
+                       class="cta-button" 
+                       style="background: var(--dark); color: var(--light); text-decoration: none; display: inline-block; padding: 0.8rem 2rem; border-radius: 50px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                      Get Directions
+                    </a>
+                  </div>
+                </div>
+    
+                <div></div>
+            </div>
+        </main>
+    
+        <div id="menuModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeMenuModal">×</span>
+                <h2>OUR MENU</h2>
+                
+                <div class="menu-section">
+                    <h3>SIGNATURE ROLLS</h3>
+                    <div class="menu-item">
+                        <span>Dragon Roll<br><small>Tempura shrimp, eel, avocado, eel sauce</small></span>
+                        <span>28</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Phoenix Roll<br><small>Spicy salmon, cucumber, topped with tuna</small></span>
+                        <span>26</span>
+                    </div>
+                </div>
+    
+                <div class="menu-section">
+                    <h3>CLASSIC ROLLS</h3>
+                    <div class="menu-item">
+                        <span>California Roll<br><small>Crab, avocado, cucumber</small></span>
+                        <span>18</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Spicy Tuna Roll<br><small>Fresh tuna, spicy mayo, cucumber</small></span>
+                        <span>20</span>
+                    </div>
+                </div>
+    
+                <div class="menu-section">
+                    <h3>SASHIMI &amp; NIGIRI</h3>
+                    <div class="menu-item">
+                        <span>Salmon Sashimi (5 pcs)<br><small>Fresh Norwegian salmon</small></span>
+                        <span>24</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Tuna Nigiri (2 pcs)<br><small>Bluefin tuna on seasoned rice</small></span>
+                        <span>16</span>
+                    </div>
+                </div>
+    
+                <div class="menu-section">
+                    <h3>BEVERAGES</h3>
+                    <div class="menu-item">
+                        <span>Sake Selection<br><small>Ask your server for today's premium selection</small></span>
+                        <span>18-45</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Japanese Beer<br><small>Sapporo, Asahi, or Kirin</small></span>
+                        <span>8</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Green Tea<br><small>Premium sencha or genmaicha</small></span>
+                        <span>6</span>
+                    </div>
+                </div>
+    
+                <div class="menu-section">
+                    <h3>DESSERTS</h3>
+                    <div class="menu-item">
+                        <span>Mochi Ice Cream (3 pcs)<br><small>Green tea, mango, or strawberry</small></span>
+                        <span>12</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Matcha Cheesecake<br><small>House-made with red bean sauce</small></span>
+                        <span>14</span>
+                    </div>
+                    <div class="menu-item">
+                        <span>Tempura Ice Cream<br><small>Vanilla ice cream in crispy tempura coating</small></span>
+                        <span>16</span>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
+        <div id="reservationModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeReservationModal">×</span>
+                <h2>MAKE A RESERVATION</h2>
+                
+                <form id="reservationForm" class="reservation-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Number of Guests</label>
+                        <select id="guests" required="">
+                            <option value="1">1 Guest</option>
+                            <option value="2">2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="5">5 Guests</option>
+                            <option value="6">6 Guests</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="special">Special Requests</label>
+                        <textarea id="special"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Reserve Table</button>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <p style="margin-bottom: 1rem; color: var(--secondary); font-size: 0.9rem;">- or -</p>
+                        <a href="https://wa.me/1234567890?text=I%20would%20like%20to%20make%20a%20reservation%20at%20The%20Dragon%20Eats" target="_blank" class="whatsapp-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"></path>
+                            </svg>
+                            Reserve via WhatsApp
+                        </a>
+                    </div>
+                </form>
+                <style>
+                .whatsapp-btn {
+                    background-color: #25D366;
+                    color: var(--light);
+                    padding: 1rem 2rem;
+                    border: none;
+                    border-radius: 50px;
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    cursor: pointer;
+                    width: 100%;
+                    transition: all 0.3s ease;
+                    margin-top: 1rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    text-decoration: none;
+                }
+    
+                .whatsapp-btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    background-color: #128C7E;
+                }
+                </style>
+            </div>
+        </div>
+    
+        <div id="roomsModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeRoomsModal">×</span>
+                <h2>OUR ROOMS</h2>
+    
+                <div class="menu-section">
+                    <div class="category-header">JADE DRAGON LODGE</div>
+                    <div class="category-content">
+                        <div class="specials-grid">
+                            <div class="room-display">
+                                <img src="https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Dragon Wing Suite - Modern Asian inspired room with traditional elements" style="width: 100%; height: 300px; object-fit: cover;">
+                                <div class="room-details">
+                                    <h3>Dragon Wing Suite</h3>
+                                    <p>Elegant suite featuring traditional Asian decor with modern amenities.</p>
+                                    <div class="room-info">
+                                        <div class="room-location">
+                                            <small>Location: Jade Dragon Lodge • East Wing • Garden View</small>
+                                        </div>
+                                        <div class="room-amenities">
+                                            <small>Amenities: Private Balcony • Tea Ceremony Area • En-suite Bathroom • Smart TV • Mini Bar</small>
+                                        </div>
+                                    </div>
+                                    <span class="price">$280/night</span>
+                                    <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+    
+                            <div class="room-display">
+                                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Garden View Suite - Traditional Japanese style room with garden view" style="width: 100%; height: 300px; object-fit: cover;">
+                                <div class="room-details">
+                                    <h3>Garden View Suite</h3>
+                                    <p>Tranquil suite overlooking our traditional Japanese garden.</p>
+                                    <div class="room-info">
+                                        <div class="room-location">
+                                            <small>Location: Jade Dragon Lodge • West Wing • Garden View</small>
+                                        </div>
+                                        <div class="room-amenities">
+                                            <small>Amenities: Garden Access • Tatami Room • En-suite Bathroom • Smart TV • Tea Set</small>
+                                        </div>
+                                    </div>
+                                    <span class="price">$260/night</span>
+                                    <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="category-header">GOLDEN PHOENIX LODGE</div>
+                    <div class="category-content">
+                        <div class="specials-grid">
+                            <div class="room-display">
+                                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Imperial Chamber - Luxurious suite with traditional Japanese elements" style="width: 100%; height: 300px; object-fit: cover;">
+                                <div class="room-details">
+                                    <h3>Imperial Chamber</h3>
+                                    <p>Spacious chamber with panoramic views and premium furnishings.</p>
+                                    <div class="room-info">
+                                        <div class="room-location">
+                                            <small>Location: Golden Phoenix Lodge • North Tower • City View</small>
+                                        </div>
+                                        <div class="room-amenities">
+                                            <small>Amenities: Private Zen Garden • Luxury Bath • King Bed • Workspace • Lounge Area</small>
+                                        </div>
+                                    </div>
+                                    <span class="price">$380/night</span>
+                                    <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+    
+                            <div class="room-display">
+                                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Royal Suite - Luxury suite with panoramic city views" style="width: 100%; height: 300px; object-fit: cover;">
+                                <div class="room-details">
+                                    <h3>Royal Suite</h3>
+                                    <p>Luxurious suite with stunning panoramic views of the city skyline.</p>
+                                    <div class="room-info">
+                                        <div class="room-location">
+                                            <small>Location: Golden Phoenix Lodge • South Tower • Panoramic View</small>
+                                        </div>
+                                        <div class="room-amenities">
+                                            <small>Amenities: Private Terrace • Jacuzzi • King Bed • Living Room • Butler Service</small>
+                                        </div>
+                                    </div>
+                                    <span class="price">$420/night</span>
+                                    <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="category-header">CRIMSON DRAGON LODGE</div>
+                    <div class="category-content">
+                        <div class="specials-grid">
+                            <div class="room-display">
+                                <img src="https://images.unsplash.com/photo-1592229505726-ca121723b8ef?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Dynasty Suite - Premium suite with modern Asian luxury design" style="width: 100%; height: 300px; object-fit: cover;">
+                                <div class="room-details">
+                                    <h3>Dynasty Suite</h3>
+                                    <p>Our finest accommodation featuring separate living areas.</p>
+                                    <div class="room-info">
+                                        <div class="room-location">
+                                            <small>Location: Crimson Dragon Lodge • Penthouse Level • Mountain View</small>
+                                        </div>
+                                        <div class="room-amenities">
+                                            <small>Amenities: Private Dining • Spa Bath • Living Room • Executive Workspace • Butler Service</small>
+                                        </div>
+                                    </div>
+                                    <span class="price">$450/night</span>
+                                    <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+    
+                            <div class="room-display">
+                                <img src="https://images.unsplash.com/photo-1592229505726-ca121723b8ef?auto=format&amp;fit=crop&amp;w=1200&amp;h=600&amp;q=80" alt="Emperor Suite - Premium penthouse suite with luxury amenities" style="width: 100%; height: 300px; object-fit: cover;">
+                                <div class="room-details">
+                                    <h3>Emperor Suite</h3>
+                                    <p>Our most exclusive penthouse suite with unparalleled luxury and service.</p>
+                                    <div class="room-info">
+                                        <div class="room-location">
+                                            <small>Location: Crimson Dragon Lodge • Penthouse Level • 360° View</small>
+                                        </div>
+                                        <div class="room-amenities">
+                                            <small>Amenities: Private Pool • Full Kitchen • Private Elevator • Cinema Room • 24/7 Butler</small>
+                                        </div>
+                                    </div>
+                                    <span class="price">$580/night</span>
+                                    <button class="cta-button" onclick="document.getElementById('bookingForm').scrollIntoView({behavior: 'smooth'})">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Dining</h3>
+                    <ul>
+                        <li><a href="https://dragoneats.com/menu">Menu</a></li>
+                        <li><a href="https://dragoneats.com/reservations">Reservations</a></li>
+                        <li><a href="https://dragoneats.com/specials">Chef's Specials</a></li>
+                        <li><a href="https://dragoneats.com/private-dining">Private Dining</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Accommodation</h3>
+                    <ul>
+                        <li><a href="https://dragoneats.com/rooms">Rooms &amp; Suites</a></li>
+                        <li><a href="https://dragoneats.com/amenities">Amenities</a></li>
+                        <li><a href="https://dragoneats.com/book">Book a Stay</a></li>
+                        <li><a href="https://dragoneats.com/packages">Special Packages</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="https://dragoneats.com/about">About Us</a></li>
+                        <li><a href="https://dragoneats.com/contact">Contact</a></li>
+                        <li><a href="https://dragoneats.com/location">Location</a></li>
+                        <li><a href="https://dragoneats.com/careers">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    
+        <script>
+            function openTab(tabName) {
+                const tabContents = document.getElementsByClassName('tab-content');
+                const tabButtons = document.getElementsByClassName('tab-btn');
+                
+                for (let content of tabContents) {
+                    content.classList.remove('active');
+                }
+                for (let button of tabButtons) {
+                    button.classList.remove('active');
+                }
+                
+                document.getElementById(tabName).classList.add('active');
+                document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
+            }
+    
+            // Modal functionality
+            const menuModal = document.getElementById('menuModal');
+            const reservationModal = document.getElementById('reservationModal');
+            const roomsModal = document.getElementById('roomsModal');
+            const closeMenuModal = document.getElementById('closeMenuModal');
+            const closeReservationModal = document.getElementById('closeReservationModal');
+            const closeRoomsModal = document.getElementById('closeRoomsModal');
+    
+            closeMenuModal.onclick = function() {
+                menuModal.style.display = "none";
+                document.body.style.overflow = 'auto';
+            }
+    
+            closeReservationModal.onclick = function() {
+                reservationModal.style.display = "none";
+                document.body.style.overflow = 'auto';
+            }
+    
+            closeRoomsModal.onclick = function() {
+                roomsModal.style.display = "none";
+                document.body.style.overflow = 'auto';
+            }
+    
+            window.onclick = function(event) {
+                if (event.target == menuModal) {
+                    menuModal.style.display = "none";
+                    document.body.style.overflow = 'auto';
+                }
+                if (event.target == reservationModal) {
+                    reservationModal.style.display = "none";
+                    document.body.style.overflow = 'auto';
+                }
+                if (event.target == roomsModal) {
+                    roomsModal.style.display = "none";
+                    document.body.style.overflow = 'auto';
+                }
+            }
+    
+            // Category headers functionality
+            const categoryHeaders = document.querySelectorAll('.category-header');
+            
+            categoryHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    header.classList.toggle('active');
+                });
+            });
+    
+        </script>
+    </body></html>

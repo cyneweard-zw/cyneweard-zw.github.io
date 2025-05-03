@@ -1,0 +1,253 @@
+/* Navbar styles */
+.navbar {
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(200, 200, 200, 0.5);
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 50px;
+    box-sizing: border-box;
+    transition: top 0.3s ease, left 0.3s ease, right 0.3s ease, max-width 0.3s ease, margin 0.3s ease, border-radius 0.3s ease, border 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+
+/* Navbar styles when scrolled */
+.navbar.scrolled {
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    padding: 10px 20px;
+}
+
+.navbar .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Default: show as flex row */
+}
+
+/* Base list item styles */
+.navbar li {
+    margin: 0 15px; /* Adjust margin for spacing between menu items */
+    position: relative; /* Needed for dropdown positioning */
+}
+
+/* Styles for regular links (e.g., Contact - non-dropdown) */
+.navbar li .nav-link { /* Targeting links with class nav-link */
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+     padding: 10px 0; /* Add padding for better spacing/click area */
+     display: inline-block; /* Ensure padding works */
+     cursor: pointer; /* Indicate clickable */
+}
+
+.navbar li .nav-link:hover {
+    color: #4CAF50; /* Changed from #a0c4ff to primary green */
+}
+
+/* Dropdown styles */
+.navbar li.dropdown {
+    display: inline-block;
+}
+
+.navbar .dropbtn {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+    padding: 10px 0; /* Add padding for better spacing/click area */
+    display: inline-block; /* Ensure padding works */
+    cursor: pointer; /* Indicate clickable */
+}
+
+ .navbar .dropbtn:hover {
+     color: #4CAF50; /* Changed from #a0c4ff to primary green */
+ }
+
+.navbar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.95);
+    min-width: 180px; /* Increased width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px; /* Slightly larger radius */
+    padding: 10px 0; /* Increased padding */
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%; /* Position below the button */
+    white-space: nowrap;
+    border: 1px solid rgba(200, 200, 200, 0.5);
+    overflow: hidden; /* Ensures border-radius is applied to children */
+}
+
+.navbar .dropdown-content a {
+    color: #333;
+    padding: 12px 20px; /* Padding for dropdown items */
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 1em;
+    font-weight: normal;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar .dropdown-content a:hover {
+    background-color: #4CAF50; /* Changed from #a0c4ff to primary green */
+    color: #fff;
+}
+
+/* Show the dropdown menu on hover */
+.navbar li.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Hamburger menu button */
+.menu-toggle {
+    display: none; /* Hidden by default on desktop */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 2em; /* Adjust size as needed */
+    color: #333;
+    z-index: 1001; /* Ensure it's above other content */
+}
+
+/* Responsive adjustments for Navbar */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start; /* Align items to the start */
+        gap: 10px;
+        padding: 15px 10px;
+        position: fixed; /* Ensure it stays fixed */
+        width: 100%; /* Full width */
+        left: 0;
+        right: 0;
+        top: 0; /* Stick to the top when scrolled */
+        max-width: none;
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .navbar .logo-link {
+         width: 100%; /* Allow logo to take full width if needed for alignment */
+         display: flex;
+         justify-content: space-between; /* Push logo left, toggle right */
+         align-items: center;
+    }
+
+    .navbar .logo {
+        font-size: 1.5em;
+         /* Removed margin-bottom */
+    }
+
+    /* Show the hamburger menu button */
+    .menu-toggle {
+        display: block;
+        order: 1; /* Ensure button is after the logo in flex layout */
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        display: none; /* Hidden by default on mobile */
+        background-color: rgba(255, 255, 255, 0.9); /* Background for expanded menu */
+        padding: 10px 0;
+        margin-top: 10px; /* Space below logo/toggle */
+        border-top: 1px solid rgba(200, 200, 200, 0.5);
+    }
+
+    /* Show the menu when active */
+    .navbar ul.active {
+        display: flex;
+    }
+
+    /* Adjust spacing and width for mobile list items */
+    .navbar li {
+        margin: 5px 0;
+        width: 95%; /* Give items some width */
+        text-align: center;
+    }
+
+    /* Adjust styling for regular links on mobile (e.g., Contact) */
+    .navbar li .nav-link { /* Targeting links with class nav-link */
+        margin: 0;
+        padding: 10px 0;
+        display: block;
+        width: 100%; /* Make link fill list item */
+        background-color: rgba(255, 255, 255, 0.7); /* Add a subtle background */
+        border-radius: 4px;
+    }
+
+    /* Adjust dropdown button on mobile */
+    .navbar .dropbtn {
+        margin: 0;
+        padding: 10px 0;
+        display: block;
+        width: 100%; /* Make button full width */
+        background-color: rgba(255, 255, 255, 0.7); /* Add a subtle background */
+        border-radius: 4px;
+    }
+
+
+    /* Show dropdown content inline on mobile */
+    .navbar .dropdown-content {
+        position: static;
+        display: block; /* Always show dropdown content on mobile when menu is active */
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+        border: none;
+        background-color: transparent; /* Transparent background for inline list */
+        margin-top: 5px;
+        transform: none;
+        left: auto;
+        min-width: auto;
+    }
+
+     /* Style links within the mobile dropdown content */
+     .navbar .dropdown-content a {
+         padding: 8px 15px; /* Adjust padding */
+         text-align: center; /* Center text */
+         background-color: rgba(255, 255, 255, 0.5); /* Add a subtle background */
+         margin-bottom: 3px; /* Space between items */
+         border-radius: 4px;
+     }
+
+     /* Remove hover effect logic for mobile dropdowns as they are always visible */
+    .navbar li.dropdown:hover .dropdown-content {
+        display: block; /* Override hover effect, content is always displayed */
+    }
+}
