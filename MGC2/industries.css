@@ -1,0 +1,68 @@
+/* Industries Page */
+.industries-intro {
+    padding: 2rem 1rem;
+}
+
+.industry-item.detailed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.industry-icon {
+    margin-bottom: 1.5rem;
+}
+
+.industry-icon i {
+    font-size: 3rem;
+    color: var(--secondary-color);
+}
+
+.industry-item.detailed h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.industry-item.detailed h3 {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 0.8rem;
+}
+
+.industry-item.detailed ul {
+    margin-bottom: 1rem;
+    padding-left: 1.2rem;
+}
+
+.industry-item.detailed ul li {
+    margin-bottom: 0.5rem;
+}
+
+.case-studies-preview {
+    padding: 3rem 1rem;
+    background-color: var(--light-color);
+}
+
+.case-studies-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.case-study-card {
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.industry-tag {
+    display: inline-block;
+    background-color: var(--light-gray-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}

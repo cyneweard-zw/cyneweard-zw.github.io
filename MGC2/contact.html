@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | MGC</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="MGC Logo">
+                <span>MGC</span>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="industries.html">Industries</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="page-header-content">
+                <h1>Contact Us</h1>
+                <p>Reach out to discuss how we can help your organization.</p>
+            </div>
+        </section>
+
+        <section class="contact-grid">
+            <div class="container">
+                <div class="contact-form-container">
+                    <h2>Get in Touch</h2>
+                    <p>Complete the form below for a free consultation or to learn more about our services.</p>
+                    
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company Name *</label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="service">Service of Interest</label>
+                            <select id="service" name="service">
+                                <option value="">Select a service</option>
+                                <option value="risk-assessment">Anti-Corruption Risk Assessment</option>
+                                <option value="compliance-framework">Compliance Framework Design</option>
+                                <option value="policy-audit">Policy & Process Audit</option>
+                                <option value="training">Ethics & Anti-Bribery Training</option>
+                                <option value="whistleblower">Whistleblower Program Support</option>
+                                <option value="other">Other/Not Sure</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="message">How can we help? *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width checkbox-group">
+                            <input type="checkbox" id="subscribe" name="subscribe">
+                            <label for="subscribe">Subscribe to our newsletter for compliance insights</label>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <button type="submit" class="submit-button">Send Message</button>
+                        </div>
+                        
+                        <p class="form-note">* Required fields</p>
+                    </form>
+                </div>
+                
+                <div class="contact-info-container">
+                    <div class="direct-contact">
+                        <h2>Direct Contact</h2>
+                        <div class="contact-method">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h3>Phone</h3>
+                                <p><a href="tel:+12125551234">+1 (212) 555-1234</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3>Email</h3>
+                                <p><a href="mailto:info@mgc.com">info@mgc.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Headquarters</h3>
+                                <p>123 Business Avenue, Suite 400<br>New York, NY 10001<br>United States</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="global-offices">
+                        <h2>Global Offices</h2>
+                        <div class="office-grid">
+                            <div class="office">
+                                <h3>London</h3>
+                                <p>45 Finsbury Square<br>London EC2A 1HP<br>United Kingdom</p>
+                            </div>
+                            
+                            <div class="office">
+                                <h3>Singapore</h3>
+                                <p>80 Raffles Place<br>Singapore 048624</p>
+                            </div>
+                            
+                            <div class="office">
+                                <h3>Sao Paulo</h3>
+                                <p>Av. Paulista, 1000<br>Sao Paulo, SP<br>Brazil</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="container">
+                <h2>Find Us</h2>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2164461365584!2d-73.9909341846161!3d40.75364207932787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9aeb1c6b5%3A0x35b1cfbc89a6097f!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1609879293787!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What happens after I submit my inquiry?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>One of our consultants will contact you within 24 hours to discuss your needs and schedule a complimentary initial consultation at a time convenient for you.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you work with companies of all sizes?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we tailor our services to organizations of all sizes, from startups to multinational corporations. Our solutions are scalable and customized to fit your specific needs and budget.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How quickly can you implement a compliance program?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Implementation timelines vary based on your organization's size, complexity, and current systems. Basic programs can be implemented in 4-6 weeks, while comprehensive enterprise-wide programs may take 3-6 months.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you offer virtual consultations?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer both in-person and virtual consultations through secure video conferencing platforms. Many of our services can be delivered remotely, making it convenient for clients anywhere in the world.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-columns">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="MGC Logo">
+                    <span>MGC</span>
+                </div>
+                <p>Global leaders in anti-corruption consulting and compliance solutions.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="industries.html">Industries</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <address>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Business Avenue, Suite 400<br>New York, NY 10001</p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+12125551234">+1 (212) 555-1234</a></p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@mgc.com">info@mgc.com</a></p>
+                </address>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 MGC. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

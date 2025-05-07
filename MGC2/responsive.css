@@ -1,0 +1,225 @@
+/* Media Queries */
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .trust-logo {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    
+    .service-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .industry-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .article-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .values-grid,
+    .credentials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .process-steps {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .process-step {
+        flex: 0 0 calc(50% - 0.75rem);
+    }
+    
+    .case-studies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .resources-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .newsletter-form {
+        flex-direction: row;
+    }
+    
+    .newsletter-form input {
+        flex: 1;
+    }
+    
+    .office-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .contact-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .menu-toggle {
+        display: none;
+    }
+    
+    .nav-links {
+        position: static;
+        width: auto;
+        height: auto;
+        background-color: transparent;
+        flex-direction: row;
+        padding: 0;
+        display: flex;
+    }
+    
+    .nav-links li {
+        margin: 0 0 0 1.5rem;
+    }
+    
+    .nav-links a {
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+    }
+    
+    .hero-content,
+    .cta-content {
+        max-width: 70%;
+    }
+    
+    .service-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .industry-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .footer-columns {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .footer-bottom p {
+        margin-bottom: 0;
+    }
+    
+    .service-card.detailed {
+        flex-direction: row;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+    
+    .service-card.detailed .service-icon {
+        flex: 0 0 auto;
+    }
+    
+    .service-card.detailed.alt {
+        flex-direction: row-reverse;
+    }
+    
+    .service-card.detailed .secondary-button {
+        align-self: auto;
+    }
+    
+    .process-step {
+        flex: 0 0 calc(25% - 1.125rem);
+    }
+    
+    .industry-item.detailed {
+        flex-direction: row;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+    
+    .industry-icon {
+        flex: 0 0 auto;
+    }
+    
+    .case-studies-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .contact-grid .container {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 2rem;
+    }
+    
+    .contact-form-container {
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+    }
+    
+    .mission-section .container {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 3rem;
+        align-items: center;
+    }
+    
+    .mission-content {
+        margin-bottom: 0;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .values-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .credentials-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+

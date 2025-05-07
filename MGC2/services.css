@@ -1,0 +1,83 @@
+/* Services Page */
+.services-intro,
+.service-details,
+.process-section {
+    padding: 2rem 1rem;
+}
+
+.intro-text {
+    text-align: center;
+    font-size: 1.1rem;
+    max-width: 90%;
+    margin: 0 auto 2rem;
+}
+
+.service-card.detailed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.service-card.detailed .service-icon {
+    margin-bottom: 1.5rem;
+}
+
+.service-card.detailed i {
+    font-size: 3rem;
+}
+
+.service-card.detailed h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.service-card.detailed h3 {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 0.8rem;
+}
+
+.service-card.detailed ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.2rem;
+}
+
+.service-card.detailed ul li {
+    margin-bottom: 0.5rem;
+}
+
+.service-card.detailed .secondary-button {
+    align-self: flex-start;
+}
+
+.process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.process-step {
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0 auto 1rem;
+}
+
