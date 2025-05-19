@@ -50,130 +50,20 @@
                     <button class="filter-button" data-filter="case-studies">Case Studies</button>
                     <button class="filter-button" data-filter="webinars">Webinars</button>
                 </div>
+                <div class="search-container">
+                    <input type="text" id="resource-search" placeholder="Search resources..." class="search-input">
+                    <button id="search-button" class="search-button"><i class="fas fa-search"></i></button>
+                    <div id="search-dropdown" class="search-dropdown"></div>
+                </div>
             </div>
         </section>
 
         <section class="resources-grid">
             <div class="container">
-                <div class="resources-list">
-                    <div class="resource-card" data-type="articles">
-                        <div class="resource-image">
-                            <img src="article1.png" alt="Global Compliance Trends">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Article</span>
-                            <span class="date">June 15, 2023</span>
-                            <h3>2023 Global Anti-Corruption Compliance Trends</h3>
-                            <p>A comprehensive analysis of emerging anti-corruption enforcement patterns and compliance expectations across major jurisdictions.</p>
-                            <a href="#" class="read-more">Read Article</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="case-studies">
-                        <div class="resource-image">
-                            <img src="article2.png" alt="Whistleblower System Case Study">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Case Study</span>
-                            <span class="date">May 28, 2023</span>
-                            <h3>Building an Effective Whistleblower System</h3>
-                            <p>How a multinational organization transformed their reporting procedures to increase report quality and volume while protecting whistleblowers.</p>
-                            <a href="#" class="read-more">Read Case Study</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="guides">
-                        <div class="resource-image">
-                            <img src="guide1.png" alt="Third-Party Due Diligence Guide">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Practical Guide</span>
-                            <span class="date">April 12, 2023</span>
-                            <h3>Third-Party Due Diligence: A Step-by-Step Approach</h3>
-                            <p>A comprehensive guide to implementing risk-based third-party due diligence processes that satisfy regulatory expectations and business needs.</p>
-                            <a href="#" class="read-more">Download Guide</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="webinars">
-                        <div class="resource-image">
-                            <img src="webinar1.png" alt="EU Whistleblower Directive Webinar">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Webinar Recording</span>
-                            <span class="date">March 22, 2023</span>
-                            <h3>Navigating the EU Whistleblower Directive</h3>
-                            <p>Expert insights on implementing whistleblower systems that comply with the EU Directive while fostering a speak-up culture.</p>
-                            <a href="#" class="read-more">Watch Webinar</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="articles">
-                        <div class="resource-image">
-                            <img src="article3.png" alt="AI in Compliance">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Article</span>
-                            <span class="date">February 18, 2023</span>
-                            <h3>The Role of AI in Modern Compliance Programs</h3>
-                            <p>Exploring how artificial intelligence and machine learning are transforming anti-corruption monitoring and risk assessment.</p>
-                            <a href="#" class="read-more">Read Article</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="guides">
-                        <div class="resource-image">
-                            <img src="guide2.png" alt="Compliance Program Evaluation">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Practical Guide</span>
-                            <span class="date">January 30, 2023</span>
-                            <h3>Evaluating Your Compliance Program Effectiveness</h3>
-                            <p>A framework for measuring the effectiveness of your anti-corruption compliance program based on DOJ guidance and international standards.</p>
-                            <a href="#" class="read-more">Download Guide</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="case-studies">
-                        <div class="resource-image">
-                            <img src="case1.png" alt="Pharmaceutical Company Case Study">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Case Study</span>
-                            <span class="date">December 11, 2022</span>
-                            <h3>Revamping HCP Interactions in the Pharmaceutical Industry</h3>
-                            <p>How a global pharmaceutical company transformed its approach to healthcare provider interactions to ensure compliance with anti-corruption laws.</p>
-                            <a href="#" class="read-more">Read Case Study</a>
-                        </div>
-                    </div>
-
-                    <div class="resource-card" data-type="webinars">
-                        <div class="resource-image">
-                            <img src="webinar2.png" alt="High-Risk Markets Webinar">
-                        </div>
-                        <div class="resource-content">
-                            <span class="resource-type">Webinar Recording</span>
-                            <span class="date">November 8, 2022</span>
-                            <h3>Operating with Integrity in High-Risk Markets</h3>
-                            <p>Practical strategies for managing corruption risks while doing business in challenging jurisdictions with high corruption indices.</p>
-                            <a href="#" class="read-more">Watch Webinar</a>
-                        </div>
-                    </div>
+                <div class="resources-list" id="resources-container">
+                    <!-- Resources will be dynamically inserted here -->
                 </div>
-            </div>
-        </section>
-
-        <section class="newsletter-section">
-            <div class="container">
-                <div class="newsletter-content">
-                    <h2>Stay Updated</h2>
-                    <p>Subscribe to our newsletter to receive the latest anti-corruption insights, regulatory updates, and best practices directly to your inbox.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit" class="submit-button">Subscribe</button>
-                    </form>
-                    <p class="privacy-note">We respect your privacy. You can unsubscribe at any time.</p>
-                </div>
+                <div id="pagination-container" class="pagination-container"></div>
             </div>
         </section>
 
@@ -214,7 +104,7 @@
             <div class="footer-column">
                 <h3>Contact Us</h3>
                 <address>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Business Avenue, Suite 400<br>New York, NY 10001</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jacaranda Crescent<br>Gwanda, Zimbabwe</p>
                     <p><i class="fas fa-phone"></i> <a href="tel:+12125551234">+1 (212) 555-1234</a></p>
                     <p><i class="fas fa-envelope"></i> <a href="mailto:info@mgc.com">info@mgc.com</a></p>
                 </address>
@@ -229,6 +119,7 @@
         </div>
     </footer>
     
+    <script src="resources.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

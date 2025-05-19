@@ -8,6 +8,7 @@
 @import 'industries.css';
 @import 'resources.css';
 @import 'contact.css';
+@import 'article.css';
 @import 'responsive.css';
 
 /* Original styles.css has been refactored into separate component files */

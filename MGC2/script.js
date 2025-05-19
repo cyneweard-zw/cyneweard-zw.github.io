@@ -91,23 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Newsletter form
-    const newsletterForm = document.querySelector('.newsletter-form');
-    
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const emailInput = newsletterForm.querySelector('input[type="email"]');
-            if (emailInput && emailInput.value.trim()) {
-                alert('Thanks for subscribing to our newsletter!');
-                newsletterForm.reset();
-            } else {
-                alert('Please enter a valid email address.');
-            }
-        });
-    }
-    
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -125,4 +108,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
