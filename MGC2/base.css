@@ -1,15 +1,23 @@
 /* Base Styles */
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #3498db;
-    --accent-color: #e74c3c;
-    --light-color: #f8f9fa;
-    --dark-color: #343a40;
-    --gray-color: #6c757d;
-    --light-gray-color: #e9ecef;
-    --border-color: #dee2e6;
-    --font-primary: 'Montserrat', sans-serif;
-    --font-secondary: 'Open Sans', sans-serif;
+    --primary-color: #020817;
+    --secondary-color: #0f172a;
+    --accent-color: #3b82f6;
+    --light-color: #f8fafc;
+    --dark-color: #0f172a;
+    --gray-color: #64748b;
+    --light-gray-color: #f1f5f9;
+    --border-color: #e2e8f0;
+    --muted-color: #f8fafc;
+    --muted-foreground: #64748b;
+    --card-color: #ffffff;
+    --font-primary: 'Inter', 'Montserrat', sans-serif;
+    --font-secondary: 'Inter', 'Open Sans', sans-serif;
+    --radius: 0.5rem;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 * {
@@ -26,41 +34,51 @@ body {
     font-family: var(--font-secondary);
     line-height: 1.6;
     color: var(--dark-color);
-    background-color: #fff;
+    background-color: #ffffff;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
     font-weight: 600;
     margin-bottom: 1rem;
-    line-height: 1.3;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.1;
 }
 
 h2 {
-    font-size: 1.75rem;
+    font-size: 1.875rem;
+    font-weight: 600;
     margin-bottom: 1.5rem;
 }
 
 h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 p {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
 }
 
 a {
-    color: var(--secondary-color);
+    color: var(--accent-color);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 a:hover {
-    color: var(--primary-color);
+    color: #2563eb;
 }
 
 img {
@@ -75,4 +93,3 @@ img {
     margin-right: auto;
     margin-left: auto;
 }
-
