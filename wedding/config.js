@@ -3,7 +3,7 @@
 
 const CONFIG = {
     // Google Sheets Web App URL (get this from your Google Apps Script deployment)
-    GOOGLE_SHEETS_URL: 'https://script.google.com/macros/s/AKfycbw0m8gw1GYuC0-qTXRhdrHmoBkB7VzfrXR5yOqzNNlsYZYCAyQrkwe59gcDRmZ8Ss2f/exec',
+    GOOGLE_SHEETS_URL: 'https://script.google.com/macros/s/AKfycbyfoYSWZ6IhrKk_ixU-24g1aVD2gr9FFuo2glR1c92qWfD-bGPLC6TbVCvcOT6xvoJe/exec',
     
     // WhatsApp number for RSVP
     WHATSAPP_NUMBER: '263785375924',
