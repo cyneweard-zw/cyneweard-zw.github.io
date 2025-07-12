@@ -51,8 +51,11 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown(); // Initial call
 
+// Use configuration from config.js
+const GOOGLE_SHEETS_URL = CONFIG.GOOGLE_SHEETS_URL;
+
 // RSVP Form handling
-document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const formData = new FormData(this);
@@ -66,21 +69,67 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         date: new Date().toISOString()
     };
     
-    // Store RSVP data in localStorage
-    let rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
-    rsvps.push(rsvpData);
-    localStorage.setItem('rsvps', JSON.stringify(rsvps));
+    // Show loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Submitting...';
+    submitButton.disabled = true;
     
-    // Show confirmation message
-    document.getElementById('confirmation').classList.remove('hidden');
-    
-    // Reset form
-    this.reset();
-    
-    // Hide confirmation after 5 seconds
-    setTimeout(() => {
-        document.getElementById('confirmation').classList.add('hidden');
-    }, 5000);
+    try {
+        // Send to Google Sheets
+        const success = await submitToGoogleSheets(rsvpData);
+        
+        if (success) {
+            // Also store in localStorage as backup
+            let rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+            rsvps.push(rsvpData);
+            localStorage.setItem('rsvps', JSON.stringify(rsvps));
+            
+            // Show success message
+            document.getElementById('confirmation').classList.remove('hidden');
+            document.getElementById('confirmation').innerHTML = `
+                <i class="fas fa-check-circle mr-2"></i>
+                Thank you for your RSVP! We've received your response and look forward to celebrating with you.
+            `;
+            
+            // Reset form
+            this.reset();
+            document.getElementById('transportSection').classList.add('hidden');
+        } else {
+            // Fallback to localStorage only
+            let rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+            rsvps.push(rsvpData);
+            localStorage.setItem('rsvps', JSON.stringify(rsvps));
+            
+            document.getElementById('confirmation').classList.remove('hidden');
+            document.getElementById('confirmation').innerHTML = `
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                RSVP submitted! (Saved locally - we'll sync with our system later)
+            `;
+        }
+    } catch (error) {
+        console.error('Error submitting RSVP:', error);
+        
+        // Fallback to localStorage
+        let rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+        rsvps.push(rsvpData);
+        localStorage.setItem('rsvps', JSON.stringify(rsvps));
+        
+        document.getElementById('confirmation').classList.remove('hidden');
+        document.getElementById('confirmation').innerHTML = `
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            RSVP submitted! (Saved locally - we'll sync with our system later)
+        `;
+    } finally {
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        
+        // Hide confirmation after 5 seconds
+        setTimeout(() => {
+            document.getElementById('confirmation').classList.add('hidden');
+        }, 5000);
+    }
 });
 
 // Admin functionality
@@ -161,8 +210,37 @@ function exportCSV() {
     window.URL.revokeObjectURL(url);
 }
 
+// Google Sheets submission function
+async function submitToGoogleSheets(rsvpData) {
+    if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL === 'YOUR_GOOGLE_SHEETS_WEB_APP_URL_HERE') {
+        console.warn('Google Sheets URL not configured');
+        return false;
+    }
+    
+    try {
+        const response = await fetch(GOOGLE_SHEETS_URL, {
+            method: 'POST',
+            body: JSON.stringify(rsvpData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            console.log('RSVP submitted to Google Sheets successfully');
+            return true;
+        } else {
+            console.error('Failed to submit to Google Sheets:', response.status);
+            return false;
+        }
+    } catch (error) {
+        console.error('Error submitting to Google Sheets:', error);
+        return false;
+    }
+}
+
 // Dynamic WhatsApp RSVP function
-function sendWhatsAppRSVP() {
+async function sendWhatsAppRSVP() {
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const attendance = document.querySelector('input[name="attendance"]:checked');
@@ -204,6 +282,14 @@ Attendance: ${attendanceText}`;
         date: new Date().toISOString()
     };
     
+    // Try to submit to Google Sheets first
+    try {
+        await submitToGoogleSheets(rsvpData);
+    } catch (error) {
+        console.error('Failed to submit WhatsApp RSVP to Google Sheets:', error);
+    }
+    
+    // Always store in localStorage as backup
     let rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
     rsvps.push(rsvpData);
     localStorage.setItem('rsvps', JSON.stringify(rsvps));
@@ -213,6 +299,10 @@ Attendance: ${attendanceText}`;
     
     // Show confirmation
     document.getElementById('confirmation').classList.remove('hidden');
+    document.getElementById('confirmation').innerHTML = `
+        <i class="fas fa-check-circle mr-2"></i>
+        WhatsApp opened! Your RSVP has been recorded.
+    `;
     setTimeout(() => {
         document.getElementById('confirmation').classList.add('hidden');
     }, 5000);
