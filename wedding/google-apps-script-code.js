@@ -3,7 +3,7 @@
 
 function doGet(e) {
   // Handle GET requests for fetching data
-  if (e.parameter.action === 'getData') {
+  if (e && e.parameter && e.parameter.action === 'getData') {
     return getRSVPData();
   }
   
@@ -35,13 +35,15 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
       message: 'RSVP submitted successfully'
-    })).setMimeType(ContentService.MimeType.JSON);
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
     
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'error',
       message: error.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -76,14 +78,16 @@ function getRSVPData() {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
       rsvps: rsvps
-    })).setMimeType(ContentService.MimeType.JSON);
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
     
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'error',
       message: error.toString(),
       rsvps: []
-    })).setMimeType(ContentService.MimeType.JSON);
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
   }
 }
 

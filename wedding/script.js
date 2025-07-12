@@ -182,45 +182,26 @@ async function fetchFromGoogleSheets() {
     console.log('Fetching from URL:', fetchUrl);
     
     try {
-        // Try with CORS mode first
+        // Try with no-cors mode since Google Apps Script doesn't support CORS headers
         const response = await fetch(fetchUrl, {
             method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            mode: 'no-cors'
         });
         
         console.log('Response status:', response.status);
         console.log('Response ok:', response.ok);
         
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Raw response data:', data);
-            console.log('RSVPs array:', data.rsvps);
-            return data.rsvps || [];
+        // With no-cors, we can't read the response content, but we can check if it succeeded
+        if (response.type === 'opaque') {
+            console.log('Request succeeded (opaque response)');
+            // Since we can't read the response, we'll return null and fall back to localStorage
+            return null;
         } else {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            throw new Error('Request failed');
         }
     } catch (error) {
-        console.error('CORS fetch failed:', error);
-        
-        // Try with no-cors as fallback
-        try {
-            console.log('Trying no-cors fallback...');
-            const response2 = await fetch(fetchUrl, {
-                method: 'GET',
-                mode: 'no-cors'
-            });
-            
-            console.log('No-cors response:', response2);
-            // With no-cors, we can't read the response, so we'll return null
-            // and fall back to localStorage
-            return null;
-        } catch (error2) {
-            console.error('Both fetch methods failed:', error2);
-            return null;
-        }
+        console.error('Fetch failed:', error);
+        return null;
     }
 }
 
