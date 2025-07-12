@@ -134,6 +134,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
 
 // Admin functionality - Load RSVPs from Google Sheets
 async function loadRSVPs() {
+    console.log('loadRSVPs called');
     const tableBody = document.getElementById('rsvpTableBody');
     const loadingDiv = document.getElementById('loadingMessage');
     
@@ -145,12 +146,16 @@ async function loadRSVPs() {
     
     try {
         // Try to fetch from Google Sheets first
+        console.log('Attempting to fetch from Google Sheets...');
         const sheetsData = await fetchFromGoogleSheets();
+        console.log('Sheets data received:', sheetsData);
         
         if (sheetsData && sheetsData.length > 0) {
             console.log('Loaded data from Google Sheets:', sheetsData);
             displayRSVPs(sheetsData);
             return;
+        } else {
+            console.log('No data from Google Sheets, falling back to localStorage');
         }
     } catch (error) {
         console.error('Failed to fetch from Google Sheets:', error);
@@ -159,6 +164,7 @@ async function loadRSVPs() {
     // Fallback to localStorage
     console.log('Falling back to localStorage data');
     const localRSVPs = JSON.parse(localStorage.getItem('rsvps') || '[]');
+    console.log('Local RSVPs:', localRSVPs);
     displayRSVPs(localRSVPs);
 }
 
@@ -171,6 +177,7 @@ async function fetchFromGoogleSheets() {
     
     // Create a GET request URL for fetching data
     const fetchUrl = GOOGLE_SHEETS_URL.replace('/exec', '/exec?action=getData');
+    console.log('Fetching from URL:', fetchUrl);
     
     try {
         const response = await fetch(fetchUrl, {
@@ -180,8 +187,13 @@ async function fetchFromGoogleSheets() {
             }
         });
         
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
         if (response.ok) {
             const data = await response.json();
+            console.log('Raw response data:', data);
+            console.log('RSVPs array:', data.rsvps);
             return data.rsvps || [];
         } else {
             console.error('Failed to fetch from Google Sheets:', response.status);
