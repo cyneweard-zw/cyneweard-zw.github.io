@@ -53,8 +53,6 @@ updateCountdown(); // Initial call
 
 // Use configuration from config.js
 const GOOGLE_SHEETS_URL = CONFIG?.GOOGLE_SHEETS_URL || '';
-console.log('Config loaded:', CONFIG);
-console.log('Google Sheets URL:', GOOGLE_SHEETS_URL);
 
 // RSVP Form handling
 document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
@@ -134,39 +132,116 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     }
 });
 
-// Admin functionality
-function loadRSVPs() {
-    const rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+// Admin functionality - Load RSVPs from Google Sheets
+async function loadRSVPs() {
     const tableBody = document.getElementById('rsvpTableBody');
+    const loadingDiv = document.getElementById('loadingMessage');
+    
+    // Show loading message
+    if (loadingDiv) {
+        loadingDiv.classList.remove('hidden');
+    }
+    tableBody.innerHTML = '';
+    
+    try {
+        // Try to fetch from Google Sheets first
+        const sheetsData = await fetchFromGoogleSheets();
+        
+        if (sheetsData && sheetsData.length > 0) {
+            console.log('Loaded data from Google Sheets:', sheetsData);
+            displayRSVPs(sheetsData);
+            return;
+        }
+    } catch (error) {
+        console.error('Failed to fetch from Google Sheets:', error);
+    }
+    
+    // Fallback to localStorage
+    console.log('Falling back to localStorage data');
+    const localRSVPs = JSON.parse(localStorage.getItem('rsvps') || '[]');
+    displayRSVPs(localRSVPs);
+}
+
+// Fetch data from Google Sheets
+async function fetchFromGoogleSheets() {
+    if (!GOOGLE_SHEETS_URL) {
+        console.warn('Google Sheets URL not configured');
+        return null;
+    }
+    
+    // Create a GET request URL for fetching data
+    const fetchUrl = GOOGLE_SHEETS_URL.replace('/exec', '/exec?action=getData');
+    
+    try {
+        const response = await fetch(fetchUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            return data.rsvps || [];
+        } else {
+            console.error('Failed to fetch from Google Sheets:', response.status);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error fetching from Google Sheets:', error);
+        return null;
+    }
+}
+
+// Display RSVPs in the table
+function displayRSVPs(rsvps) {
+    const tableBody = document.getElementById('rsvpTableBody');
+    const loadingDiv = document.getElementById('loadingMessage');
+    
+    // Hide loading message
+    if (loadingDiv) {
+        loadingDiv.classList.add('hidden');
+    }
     
     tableBody.innerHTML = '';
     
-            rsvps.forEach(rsvp => {
-            const row = document.createElement('tr');
-            const transportText = rsvp.transport ? (rsvp.transport === 'yes' ? 'Needs Transport' : 'Own Transport') : '-';
-            const transportClass = rsvp.transport === 'yes' ? 'bg-orange-100 text-orange-800' : rsvp.transport === 'no' ? 'bg-gray-100 text-gray-800' : '';
-            
-            row.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${rsvp.name}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rsvp.phone || '-'}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${rsvp.method === 'Web Form' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
-                        ${rsvp.method || 'WhatsApp'}
-                    </span>
+    if (rsvps.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                    No RSVP data found
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${rsvp.attendance === 'yes' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                        ${rsvp.attendance === 'yes' ? 'Attending' : 'Not Attending'}
-                    </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    ${rsvp.transport ? `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${transportClass}">${transportText}</span>` : '-'}
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-500">${rsvp.notes || '-'}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(rsvp.date).toLocaleDateString()}</td>
-            `;
-            tableBody.appendChild(row);
-        });
+            </tr>
+        `;
+        return;
+    }
+    
+    rsvps.forEach(rsvp => {
+        const row = document.createElement('tr');
+        const transportText = rsvp.transport ? (rsvp.transport === 'yes' ? 'Needs Transport' : 'Own Transport') : '-';
+        const transportClass = rsvp.transport === 'yes' ? 'bg-orange-100 text-orange-800' : rsvp.transport === 'no' ? 'bg-gray-100 text-gray-800' : '';
+        
+        row.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${rsvp.name}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rsvp.phone || '-'}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${rsvp.method === 'Web Form' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
+                    ${rsvp.method || 'WhatsApp'}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${rsvp.attendance === 'yes' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                    ${rsvp.attendance === 'yes' ? 'Attending' : 'Not Attending'}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                ${rsvp.transport ? `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${transportClass}">${transportText}</span>` : '-'}
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-500">${rsvp.notes || '-'}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(rsvp.date).toLocaleDateString()}</td>
+        `;
+        tableBody.appendChild(row);
+    });
     
     // Update counts
     const attending = rsvps.filter(r => r.attendance === 'yes').length;
@@ -177,8 +252,21 @@ function loadRSVPs() {
     document.getElementById('notAttendingCount').textContent = notAttending;
 }
 
-function exportCSV() {
-    const rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+async function exportCSV() {
+    // Try to get the most current data (Google Sheets first, then localStorage)
+    let rsvps = [];
+    
+    try {
+        const sheetsData = await fetchFromGoogleSheets();
+        if (sheetsData && sheetsData.length > 0) {
+            rsvps = sheetsData;
+        } else {
+            rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+        }
+    } catch (error) {
+        console.error('Error fetching data for export:', error);
+        rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
+    }
     
     if (rsvps.length === 0) {
         alert('No RSVP data to export');
@@ -214,9 +302,6 @@ function exportCSV() {
 
 // Google Sheets submission function (Improved CORS handling)
 async function submitToGoogleSheets(rsvpData) {
-    console.log('Attempting to submit to Google Sheets:', rsvpData);
-    console.log('Using URL:', GOOGLE_SHEETS_URL);
-    
     if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL === 'YOUR_GOOGLE_SHEETS_WEB_APP_URL_HERE') {
         console.warn('Google Sheets URL not configured');
         return false;
@@ -232,11 +317,7 @@ async function submitToGoogleSheets(rsvpData) {
             }
         });
         
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
         if (response.ok) {
-            console.log('RSVP submitted to Google Sheets successfully');
             return true;
         } else {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -246,14 +327,12 @@ async function submitToGoogleSheets(rsvpData) {
         
         // Method 2: Try with no-cors mode as fallback
         try {
-            console.log('Trying no-cors fallback...');
             const response2 = await fetch(GOOGLE_SHEETS_URL, {
                 method: 'POST',
                 body: JSON.stringify(rsvpData),
                 mode: 'no-cors'
             });
             
-            console.log('RSVP sent using no-cors mode - check Google Sheets to confirm');
             return true; // Assume success with no-cors
         } catch (error2) {
             console.error('Both methods failed:', error2);
