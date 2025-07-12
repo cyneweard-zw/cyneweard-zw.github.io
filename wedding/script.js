@@ -1,5 +1,5 @@
 // Navigation functionality
-function showPage(pageId) {
+function showPage(pageId, event = null) {
     // Hide all pages
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
@@ -13,8 +13,10 @@ function showPage(pageId) {
         link.classList.remove('active');
     });
     
-    // Add active class to current nav item
-    event.target.classList.add('active');
+    // Add active class to current nav item if event exists
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
     
     // Close mobile menu
     document.getElementById('mobile-menu').classList.add('hidden');
@@ -180,8 +182,10 @@ async function fetchFromGoogleSheets() {
     console.log('Fetching from URL:', fetchUrl);
     
     try {
+        // Try with CORS mode first
         const response = await fetch(fetchUrl, {
             method: 'GET',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -196,12 +200,27 @@ async function fetchFromGoogleSheets() {
             console.log('RSVPs array:', data.rsvps);
             return data.rsvps || [];
         } else {
-            console.error('Failed to fetch from Google Sheets:', response.status);
-            return null;
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
     } catch (error) {
-        console.error('Error fetching from Google Sheets:', error);
-        return null;
+        console.error('CORS fetch failed:', error);
+        
+        // Try with no-cors as fallback
+        try {
+            console.log('Trying no-cors fallback...');
+            const response2 = await fetch(fetchUrl, {
+                method: 'GET',
+                mode: 'no-cors'
+            });
+            
+            console.log('No-cors response:', response2);
+            // With no-cors, we can't read the response, so we'll return null
+            // and fall back to localStorage
+            return null;
+        } catch (error2) {
+            console.error('Both fetch methods failed:', error2);
+            return null;
+        }
     }
 }
 
@@ -426,7 +445,7 @@ Attendance: ${attendanceText}`;
 document.addEventListener('DOMContentLoaded', function() {
     // Check if admin page is accessed
     if (window.location.hash === '#admin') {
-        showPage('admin');
+        showPage('admin', null);
         loadRSVPs();
     }
     

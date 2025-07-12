@@ -72,11 +72,11 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <button onclick="showPage('home')" class="nav-link active">Home</button>
-                        <button onclick="showPage('details')" class="nav-link">Event Details</button>
-                        <button onclick="showPage('rsvp')" class="nav-link">RSVP</button>
-                        <button onclick="showPage('travel')" class="nav-link">Travel</button>
-                        <button onclick="showPage('contact')" class="nav-link">Contact</button>
+                        <button onclick="showPage('home', event)" class="nav-link active">Home</button>
+                        <button onclick="showPage('details', event)" class="nav-link">Event Details</button>
+                        <button onclick="showPage('rsvp', event)" class="nav-link">RSVP</button>
+                        <button onclick="showPage('travel', event)" class="nav-link">Travel</button>
+                        <button onclick="showPage('contact', event)" class="nav-link">Contact</button>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -89,11 +89,11 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <button onclick="showPage('home')" class="mobile-nav-link active">Home</button>
-                <button onclick="showPage('details')" class="mobile-nav-link">Event Details</button>
-                <button onclick="showPage('rsvp')" class="mobile-nav-link">RSVP</button>
-                <button onclick="showPage('travel')" class="mobile-nav-link">Travel</button>
-                <button onclick="showPage('contact')" class="mobile-nav-link">Contact</button>
+                <button onclick="showPage('home', event)" class="mobile-nav-link active">Home</button>
+                <button onclick="showPage('details', event)" class="mobile-nav-link">Event Details</button>
+                <button onclick="showPage('rsvp', event)" class="mobile-nav-link">RSVP</button>
+                <button onclick="showPage('travel', event)" class="mobile-nav-link">Travel</button>
+                <button onclick="showPage('contact', event)" class="mobile-nav-link">Contact</button>
             </div>
         </div>
     </nav>
@@ -144,10 +144,10 @@
 
                     <!-- Quick Links -->
                     <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
-                        <button onclick="showPage('rsvp')" class="bg-wedding-800 text-white px-8 py-3 rounded-lg hover:bg-wedding-700 transition-colors duration-300">
+                        <button onclick="showPage('rsvp', event)" class="bg-wedding-800 text-white px-8 py-3 rounded-lg hover:bg-wedding-700 transition-colors duration-300">
                             RSVP Now
                         </button>
-                        <button onclick="showPage('details')" class="border-2 border-wedding-800 text-wedding-800 px-8 py-3 rounded-lg hover:bg-wedding-800 hover:text-white transition-colors duration-300">
+                        <button onclick="showPage('details', event)" class="border-2 border-wedding-800 text-wedding-800 px-8 py-3 rounded-lg hover:bg-wedding-800 hover:text-white transition-colors duration-300">
                             Event Details
                         </button>
                     </div>
