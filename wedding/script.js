@@ -52,7 +52,9 @@ setInterval(updateCountdown, 1000);
 updateCountdown(); // Initial call
 
 // Use configuration from config.js
-const GOOGLE_SHEETS_URL = CONFIG.GOOGLE_SHEETS_URL;
+const GOOGLE_SHEETS_URL = CONFIG?.GOOGLE_SHEETS_URL || '';
+console.log('Config loaded:', CONFIG);
+console.log('Google Sheets URL:', GOOGLE_SHEETS_URL);
 
 // RSVP Form handling
 document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
@@ -212,13 +214,16 @@ function exportCSV() {
 
 // Google Sheets submission function (Improved CORS handling)
 async function submitToGoogleSheets(rsvpData) {
+    console.log('Attempting to submit to Google Sheets:', rsvpData);
+    console.log('Using URL:', GOOGLE_SHEETS_URL);
+    
     if (!GOOGLE_SHEETS_URL || GOOGLE_SHEETS_URL === 'YOUR_GOOGLE_SHEETS_WEB_APP_URL_HERE') {
         console.warn('Google Sheets URL not configured');
         return false;
     }
     
     try {
-        // Method 1: Try direct POST with proper headers
+        // Method 1: Try direct POST with proper headers (like your working test)
         const response = await fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
             body: JSON.stringify(rsvpData),
@@ -226,6 +231,9 @@ async function submitToGoogleSheets(rsvpData) {
                 'Content-Type': 'application/json'
             }
         });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
         
         if (response.ok) {
             console.log('RSVP submitted to Google Sheets successfully');
@@ -238,6 +246,7 @@ async function submitToGoogleSheets(rsvpData) {
         
         // Method 2: Try with no-cors mode as fallback
         try {
+            console.log('Trying no-cors fallback...');
             const response2 = await fetch(GOOGLE_SHEETS_URL, {
                 method: 'POST',
                 body: JSON.stringify(rsvpData),
