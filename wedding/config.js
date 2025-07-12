@@ -12,7 +12,7 @@ const CONFIG = {
     WEDDING_DATE: 'September 7, 2025 14:00:00',
     
     // Couple names
-    COUPLE_NAMES: 'Sarah & Michael',
+    COUPLE_NAMES: 'Donald & Debra',
     
 
 };

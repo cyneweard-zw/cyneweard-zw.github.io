@@ -194,7 +194,7 @@ async function sendWhatsAppRSVP() {
     const transportText = transport ? (transport.value === 'yes' ? 'Yes, I/We need transport' : 'No, I/We have our own transport') : '';
     const notesText = notes ? `\nNotes: ${notes}` : '';
     
-    let message = `Hi! I'd like to RSVP for Sarah and Michael's wedding.
+    let message = `Hi! I'd like to RSVP for Donald and Debra's wedding.
 
 Name: ${name}
 Phone: ${phone}
