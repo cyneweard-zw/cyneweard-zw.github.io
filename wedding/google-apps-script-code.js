@@ -12,15 +12,6 @@ function doGet(e) {
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
-function doOptions(e) {
-  // Handle CORS preflight requests
-  return ContentService.createTextOutput('')
-    .setMimeType(ContentService.MimeType.TEXT)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
-}
-
 function doPost(e) {
   // Handle POST requests for submitting RSVPs
   try {
@@ -44,21 +35,13 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
       message: 'RSVP submitted successfully'
-    }))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    })).setMimeType(ContentService.MimeType.JSON);
     
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'error',
       message: error.toString()
-    }))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    })).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -93,22 +76,14 @@ function getRSVPData() {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'success',
       rsvps: rsvps
-    }))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    })).setMimeType(ContentService.MimeType.JSON);
     
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({
       status: 'error',
       message: error.toString(),
       rsvps: []
-    }))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    })).setMimeType(ContentService.MimeType.JSON);
   }
 }
 

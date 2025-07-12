@@ -1,5 +1,5 @@
 // Navigation functionality
-function showPage(pageId, clickedElement = null) {
+function showPage(pageId) {
     // Hide all pages
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
@@ -13,10 +13,8 @@ function showPage(pageId, clickedElement = null) {
         link.classList.remove('active');
     });
     
-    // Add active class to current nav item if clicked element is provided
-    if (clickedElement) {
-        clickedElement.classList.add('active');
-    }
+    // Add active class to current nav item
+    event.target.classList.add('active');
     
     // Close mobile menu
     document.getElementById('mobile-menu').classList.add('hidden');
@@ -153,8 +151,6 @@ async function loadRSVPs() {
             console.log('Loaded data from Google Sheets:', sheetsData);
             displayRSVPs(sheetsData);
             return;
-        } else {
-            console.log('No data from Google Sheets, trying localStorage');
         }
     } catch (error) {
         console.error('Failed to fetch from Google Sheets:', error);
