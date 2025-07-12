@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Sheets Integration (Fixed)</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .result { margin-top: 20px; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .steps { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .code { background: #f4f4f4; padding: 15px; border-radius: 4px; overflow-x: auto; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Test Google Sheets Integration (Fixed for CORS)</h1>
+    
+    <div class="warning">
+        <h3>⚠️ Important: CORS Issue Solution</h3>
+        <p>The "NetworkError" you're seeing is a CORS issue. Here are the solutions:</p>
+    </div>
+
+    <div class="steps">
+        <h2>Solution 1: Use JSONP Method (Recommended for Testing)</h2>
+        <p>This bypasses CORS issues by using a different approach:</p>
+        
+        <h3>Updated Google Apps Script Code:</h3>
+        <div class="code">
+function doGet(e) {
+  return ContentService.createTextOutput('Success');
+}
+
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  
+  sheet.appendRow([
+    data.name,
+    data.phone,
+    data.method,
+    data.attendance,
+    data.transport || '',
+    data.notes || '',
+    new Date()
+  ]);
+  
+  return ContentService.createTextOutput(JSON.stringify({status: 'success'}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+        </div>
+    </div>
+
+    <h2>Solution 2: Use a Local Server</h2>
+    <p>Run your website on a local server instead of opening the file directly:</p>
+    
+    <h3>Option A: Python Server (Easiest)</h3>
+    <div class="code">
+# Open command prompt/terminal in your website folder
+python -m http.server 8000
+# Then open: http://localhost:8000
+    </div>
+
+    <h3>Option B: Node.js Server</h3>
+    <div class="code">
+# Install http-server globally
+npm install -g http-server
+# Run in your website folder
+http-server
+    </div>
+
+    <h3>Option C: Live Server (VS Code Extension)</h3>
+    <p>If using VS Code, install "Live Server" extension and right-click > "Open with Live Server"</p>
+
+    <h2>Test Form (Updated Method):</h2>
+    <form id="testForm">
+        <div class="form-group">
+            <label for="sheetsUrl">Google Sheets Web App URL:</label>
+            <input type="url" id="sheetsUrl" placeholder="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" required>
+            <small>Make sure it ends with /exec</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="testName">Name:</label>
+            <input type="text" id="testName" value="Test User" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="testPhone">Phone:</label>
+            <input type="tel" id="testPhone" value="+263 78 123 4567" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="testMethod">Method:</label>
+            <select id="testMethod">
+                <option value="Web Form">Web Form</option>
+                <option value="WhatsApp">WhatsApp</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="testAttendance">Attendance:</label>
+            <select id="testAttendance">
+                <option value="yes">Yes, attending</option>
+                <option value="no">No, not attending</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="testTransport">Transport:</label>
+            <select id="testTransport">
+                <option value="">Not specified</option>
+                <option value="yes">Needs transport</option>
+                <option value="no">Own transport</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="testNotes">Notes:</label>
+            <textarea id="testNotes" rows="3" placeholder="Test notes...">This is a test RSVP submission</textarea>
+        </div>
+        
+        <button type="submit">Test Submit to Google Sheets</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const sheetsUrl = document.getElementById('sheetsUrl').value;
+            const testData = {
+                name: document.getElementById('testName').value,
+                phone: document.getElementById('testPhone').value,
+                method: document.getElementById('testMethod').value,
+                attendance: document.getElementById('testAttendance').value,
+                transport: document.getElementById('testTransport').value,
+                notes: document.getElementById('testNotes').value
+            };
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Sending data...</p>';
+            
+            try {
+                // Method 1: Try direct POST
+                const response = await fetch(sheetsUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(testData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = '<div class="result success">✅ Success! Check your Google Sheet - the data should be there!</div>';
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error('Error details:', error);
+                
+                // Method 2: Try with different headers
+                try {
+                    const response2 = await fetch(sheetsUrl, {
+                        method: 'POST',
+                        body: JSON.stringify(testData),
+                        mode: 'no-cors'
+                    });
+                    
+                    resultDiv.innerHTML = '<div class="result warning">⚠️ Data sent (no-cors mode). Check your Google Sheet to confirm.</div>';
+                } catch (error2) {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            ❌ CORS Error: ${error.message}<br><br>
+                            <strong>Solutions:</strong><br>
+                            1. Use a local server (see instructions above)<br>
+                            2. Deploy your website online<br>
+                            3. Check your Google Apps Script deployment settings
+                        </div>
+                    `;
+                }
+            }
+        });
+    </script>
+
+    <h2>Quick Fix Checklist:</h2>
+    <ul>
+        <li>✅ Google Apps Script deployed as "Web app"</li>
+        <li>✅ Access set to "Anyone"</li>
+        <li>✅ URL ends with "/exec"</li>
+        <li>✅ Using a local server (not file://)</li>
+        <li>✅ Apps Script authorized</li>
+    </ul>
+
+    <h2>Alternative: Test with Postman</h2>
+    <p>If you're still having issues, you can test your Google Sheets endpoint with Postman:</p>
+    <ol>
+        <li>Download <a href="https://www.postman.com/" target="_blank">Postman</a></li>
+        <li>Create a new POST request</li>
+        <li>Enter your Google Sheets URL</li>
+        <li>Set Content-Type: application/json</li>
+        <li>Add test data in the body</li>
+        <li>Send the request</li>
+    </ol>
+</body>
+</html> 
