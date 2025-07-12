@@ -134,183 +134,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     }
 });
 
-// Admin functionality - Load RSVPs from Google Sheets
-async function loadRSVPs() {
-    console.log('loadRSVPs called');
-    const tableBody = document.getElementById('rsvpTableBody');
-    const loadingDiv = document.getElementById('loadingMessage');
-    
-    // Show loading message
-    if (loadingDiv) {
-        loadingDiv.classList.remove('hidden');
-    }
-    tableBody.innerHTML = '';
-    
-    try {
-        // Try to fetch from Google Sheets first
-        console.log('Attempting to fetch from Google Sheets...');
-        const sheetsData = await fetchFromGoogleSheets();
-        console.log('Sheets data received:', sheetsData);
-        
-        if (sheetsData && sheetsData.length > 0) {
-            console.log('Loaded data from Google Sheets:', sheetsData);
-            displayRSVPs(sheetsData);
-            return;
-        } else {
-            console.log('No data from Google Sheets, falling back to localStorage');
-        }
-    } catch (error) {
-        console.error('Failed to fetch from Google Sheets:', error);
-    }
-    
-    // Fallback to localStorage
-    console.log('Falling back to localStorage data');
-    const localRSVPs = JSON.parse(localStorage.getItem('rsvps') || '[]');
-    console.log('Local RSVPs:', localRSVPs);
-    displayRSVPs(localRSVPs);
-}
 
-// Fetch data from Google Sheets
-async function fetchFromGoogleSheets() {
-    if (!GOOGLE_SHEETS_URL) {
-        console.warn('Google Sheets URL not configured');
-        return null;
-    }
-    
-    // Create a GET request URL for fetching data
-    const fetchUrl = GOOGLE_SHEETS_URL.replace('/exec', '/exec?action=getData');
-    console.log('Fetching from URL:', fetchUrl);
-    
-    try {
-        // Try with no-cors mode since Google Apps Script doesn't support CORS headers
-        const response = await fetch(fetchUrl, {
-            method: 'GET',
-            mode: 'no-cors'
-        });
-        
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
-        // With no-cors, we can't read the response content, but we can check if it succeeded
-        if (response.type === 'opaque') {
-            console.log('Request succeeded (opaque response)');
-            // Since we can't read the response, we'll return null and fall back to localStorage
-            return null;
-        } else {
-            throw new Error('Request failed');
-        }
-    } catch (error) {
-        console.error('Fetch failed:', error);
-        return null;
-    }
-}
-
-// Display RSVPs in the table
-function displayRSVPs(rsvps) {
-    const tableBody = document.getElementById('rsvpTableBody');
-    const loadingDiv = document.getElementById('loadingMessage');
-    
-    // Hide loading message
-    if (loadingDiv) {
-        loadingDiv.classList.add('hidden');
-    }
-    
-    tableBody.innerHTML = '';
-    
-    if (rsvps.length === 0) {
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="7" class="px-6 py-4 text-center text-gray-500">
-                    No RSVP data found
-                </td>
-            </tr>
-        `;
-        return;
-    }
-    
-    rsvps.forEach(rsvp => {
-        const row = document.createElement('tr');
-        const transportText = rsvp.transport ? (rsvp.transport === 'yes' ? 'Needs Transport' : 'Own Transport') : '-';
-        const transportClass = rsvp.transport === 'yes' ? 'bg-orange-100 text-orange-800' : rsvp.transport === 'no' ? 'bg-gray-100 text-gray-800' : '';
-        
-        row.innerHTML = `
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${rsvp.name}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rsvp.phone || '-'}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${rsvp.method === 'Web Form' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
-                    ${rsvp.method || 'WhatsApp'}
-                </span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${rsvp.attendance === 'yes' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                    ${rsvp.attendance === 'yes' ? 'Attending' : 'Not Attending'}
-                </span>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                ${rsvp.transport ? `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${transportClass}">${transportText}</span>` : '-'}
-            </td>
-            <td class="px-6 py-4 text-sm text-gray-500">${rsvp.notes || '-'}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(rsvp.date).toLocaleDateString()}</td>
-        `;
-        tableBody.appendChild(row);
-    });
-    
-    // Update counts
-    const attending = rsvps.filter(r => r.attendance === 'yes').length;
-    const notAttending = rsvps.filter(r => r.attendance === 'no').length;
-    
-    document.getElementById('totalResponses').textContent = rsvps.length;
-    document.getElementById('attendingCount').textContent = attending;
-    document.getElementById('notAttendingCount').textContent = notAttending;
-}
-
-async function exportCSV() {
-    // Try to get the most current data (Google Sheets first, then localStorage)
-    let rsvps = [];
-    
-    try {
-        const sheetsData = await fetchFromGoogleSheets();
-        if (sheetsData && sheetsData.length > 0) {
-            rsvps = sheetsData;
-        } else {
-            rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
-        }
-    } catch (error) {
-        console.error('Error fetching data for export:', error);
-        rsvps = JSON.parse(localStorage.getItem('rsvps') || '[]');
-    }
-    
-    if (rsvps.length === 0) {
-        alert('No RSVP data to export');
-        return;
-    }
-    
-    // Create CSV content
-    const headers = ['Name', 'Phone', 'Method', 'Attendance', 'Transport', 'Notes', 'Date'];
-    const csvContent = [
-        headers.join(','),
-        ...rsvps.map(rsvp => [
-            `"${rsvp.name}"`,
-            `"${rsvp.phone || ''}"`,
-            rsvp.method || 'WhatsApp',
-            rsvp.attendance === 'yes' ? 'Attending' : 'Not Attending',
-            rsvp.transport === 'yes' ? 'Needs Transport' : rsvp.transport === 'no' ? 'Own Transport' : '',
-            `"${rsvp.notes || ''}"`,
-            new Date(rsvp.date).toLocaleDateString()
-        ].join(','))
-    ].join('\n');
-    
-    // Create and download file
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `wedding-rsvps-${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-}
 
 // Google Sheets submission function (Improved CORS handling)
 async function submitToGoogleSheets(rsvpData) {
@@ -422,13 +246,7 @@ Attendance: ${attendanceText}`;
     }, 5000);
 }
 
-// Load RSVPs when admin page is shown
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if admin page is accessed
-    if (window.location.hash === '#admin') {
-        showPage('admin', null);
-        loadRSVPs();
-    }
     
     // Add smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -458,8 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Add some sample RSVP data for demonstration
-if (!localStorage.getItem('rsvps')) {
+// Only add sample data if there's no existing data and we're in development
+if (!localStorage.getItem('rsvps') && window.location.hostname === 'localhost') {
     const sampleRSVPs = [
         {
             name: 'John Smith',

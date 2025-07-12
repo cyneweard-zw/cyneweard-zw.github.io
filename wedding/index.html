@@ -465,61 +465,7 @@
         </div>
     </div>
 
-    <!-- Admin Page (Hidden) -->
-    <div id="admin" class="page pt-16">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h2 class="text-4xl font-serif font-bold text-center text-wedding-900 mb-12">RSVP Admin</h2>
-            
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-semibold text-wedding-800">Guest Responses</h3>
-                    <div class="flex gap-2">
-                        <button onclick="loadRSVPs()" class="bg-wedding-600 text-white px-4 py-2 rounded-lg hover:bg-wedding-700 transition-colors duration-300">
-                            <i class="fas fa-sync-alt mr-2"></i>Refresh
-                        </button>
-                        <button onclick="exportCSV()" class="bg-wedding-800 text-white px-4 py-2 rounded-lg hover:bg-wedding-700 transition-colors duration-300">
-                            <i class="fas fa-download mr-2"></i>Export CSV
-                        </button>
-                    </div>
-                </div>
 
-                <div class="overflow-x-auto">
-                    <!-- Loading message -->
-                    <div id="loadingMessage" class="hidden text-center py-8">
-                        <div class="inline-flex items-center">
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-wedding-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            <span class="text-wedding-600">Loading RSVP data...</span>
-                        </div>
-                    </div>
-                    
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attendance</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transport</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rsvpTableBody" class="bg-white divide-y divide-gray-200">
-                            <!-- RSVP data will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="mt-6 text-center text-gray-600">
-                    <p>Total Responses: <span id="totalResponses">0</span></p>
-                    <p>Attending: <span id="attendingCount">0</span> | Not Attending: <span id="notAttendingCount">0</span></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="config.js"></script>
     <script src="script.js"></script>
